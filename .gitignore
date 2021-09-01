@@ -9,3 +9,7 @@ CCDrone
 LSHDrone
 MysqlCredentials.hpp
 StartSM
+SRSSrv
+CryocoolerLog.txt
+._*.cpp
+._*.hpp

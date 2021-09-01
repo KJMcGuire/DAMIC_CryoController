@@ -27,7 +27,8 @@ int main( int argc, char** argv )
 
 
     int numRefreshes = 0;
-    int Status, NReadBytes;
+    int Status = 0;
+    int NReadBytes;
     int KeepRunning=1;
 
 

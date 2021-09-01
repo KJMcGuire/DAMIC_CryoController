@@ -17,6 +17,7 @@
 #include "CryoControlSM.hpp"
 #include "PID_v1.h"
 
+#define MAX_HEATER_POWER 100
 
 CryoControlSM::CryoControlSM(void){
 
@@ -44,8 +45,8 @@ CryoControlSM::CryoControlSM(void){
     /*The two PID implementations*/
     this->AbsPID = new PID(&CurrentTemperature, &TOutput, &SetTemperature, KpA, KiA, KdA, P_ON_M, DIRECT);
     this->RatePID = new PID(&TempratureRateMovingAvg, &ROutput, &RSetpoint, KpR, KiR, KdR, P_ON_M, DIRECT);
-    this->AbsPID->SetOutputLimits(0,75);
-    this->RatePID->SetOutputLimits(0,75);
+    this->AbsPID->SetOutputLimits(0,MAX_HEATER_POWER);
+    this->RatePID->SetOutputLimits(0,MAX_HEATER_POWER);
 
 }
 
@@ -240,8 +241,8 @@ void CryoControlSM::Warmup(void){
         this->RatePID->SetMode(AUTOMATIC);
 
         /*Turn off the cryocooler power control feature and put cryocooler to min power*/
-        this->RatePID->SetOutputLimits(0,75);
-        this->AbsPID->SetOutputLimits(0,75);
+        this->RatePID->SetOutputLimits(0,MAX_HEATER_POWER);
+        this->AbsPID->SetOutputLimits(0,MAX_HEATER_POWER);
         this->ThisRunCCPower = 0.0;
 
         /*Set the correct rate direction for the rate*/
@@ -276,8 +277,8 @@ void CryoControlSM::Idle(void){
         this->RatePID->SetMode(MANUAL);
 
         /*Turn off the cryocooler power control feature and put cryocooler to min power*/
-        this->RatePID->SetOutputLimits(0,75);
-        this->AbsPID->SetOutputLimits(0,75);
+        this->RatePID->SetOutputLimits(0,MAX_HEATER_POWER);
+        this->AbsPID->SetOutputLimits(0,MAX_HEATER_POWER);
         this->ThisRunCCPower = 0.0;
 
         /*Turn cryocooler off*/
@@ -306,8 +307,8 @@ void CryoControlSM::Fault(void){
         this->RatePID->SetMode(MANUAL);
 
         /*Turn off the cryocooler power control feature and put cryocooler to min power*/
-        this->RatePID->SetOutputLimits(0,75);
-        this->AbsPID->SetOutputLimits(0,75);
+        this->RatePID->SetOutputLimits(0,MAX_HEATER_POWER);
+        this->AbsPID->SetOutputLimits(0,MAX_HEATER_POWER);
 
         /*Turn cryocooler off*/
         this->CCoolerPower=0;
@@ -345,8 +346,8 @@ void CryoControlSM::CoolDownHot(void ){
         this->AbsPID->SetMode(MANUAL);
         this->RatePID->SetMode(AUTOMATIC);
 
-        this->RatePID->SetOutputLimits(0,75);
-        this->AbsPID->SetOutputLimits(0,75);
+        this->RatePID->SetOutputLimits(0, MAX_HEATER_POWER);
+        this->AbsPID->SetOutputLimits(0, MAX_HEATER_POWER);
 
         /*Set the correct rate direction for the rate*/
         this->RSetpoint = -1.0*DeltaTRatePerMin/60.0; // degrees per sec
@@ -382,8 +383,8 @@ void CryoControlSM::CoolDownCold(void){
         this->RatePID->SetMode(AUTOMATIC);
 
         /*Rate PID will now go negative if it needs acceleration from the cryocooler*/
-        this->RatePID->SetOutputLimits(-120,75);
-        this->AbsPID->SetOutputLimits(-120,75);
+        this->RatePID->SetOutputLimits(-120,MAX_HEATER_POWER);
+        this->AbsPID->SetOutputLimits(-120,MAX_HEATER_POWER);
 
 
 
@@ -418,8 +419,8 @@ void CryoControlSM::MaintainWarm(void){
         this->AbsPID->SetMode(AUTOMATIC);
         this->RatePID->SetMode(MANUAL);
 
-        this->AbsPID->SetOutputLimits(0,75);
-        this->RatePID->SetOutputLimits(0,75);
+        this->AbsPID->SetOutputLimits(0,MAX_HEATER_POWER);
+        this->RatePID->SetOutputLimits(0,MAX_HEATER_POWER);
 
         /*Ensure cryocooler is off*/
         this->CCoolerPower=0;
@@ -452,8 +453,8 @@ void CryoControlSM::MaintainCold(void){
         this->RatePID->SetMode(MANUAL);
 
         /*Turn off the cryocooler power control feature and put cryocooler to controlled power*/
-        this->RatePID->SetOutputLimits(-120,75);
-        this->AbsPID->SetOutputLimits(-120,75);
+        this->RatePID->SetOutputLimits(-120,MAX_HEATER_POWER);
+        this->AbsPID->SetOutputLimits(-120,MAX_HEATER_POWER);
 
         /*Ensure cryocooler is on*/
         this->CCoolerPower=1;

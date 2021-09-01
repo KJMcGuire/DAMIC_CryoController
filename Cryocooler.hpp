@@ -35,7 +35,7 @@ public:
 
     void UpdateMysql(void);
     void AdjustCryoPower(void);
-    void SetCryoMode(void);
+    int SetCryoMode(void);
 
 
 

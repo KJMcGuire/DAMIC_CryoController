@@ -124,7 +124,7 @@ int Cryocooler::GetTC(void)
 
 int Cryocooler::GetP(void){
 
-    std::string CC_String, CC_Firstline;
+    std::string CC_String, CCTC_Firstline;
     std::string CCCMd = "P\r";
 
     this->WriteString(CCCMd);
@@ -159,7 +159,7 @@ int Cryocooler::GetP(void){
 
 int Cryocooler::GetPIDState(void){
 
-    std::string CC_String, CC_Firstline;
+    std::string CC_String, CCTC_Firstline;
     std::string CCCMd = "SET PID\r";
 
     this->WriteString(CCCMd);
@@ -194,7 +194,7 @@ int Cryocooler::GetPIDState(void){
 
 int Cryocooler::GetE(void){
 
-    std::string CC_S1, CC_S2, CC_S3, CC_Firstline;
+    std::string CC_S1, CC_S2, CC_S3, CCTC_Firstline;
     std::string CCCMd = "E\r";
 
     this->WriteString(CCCMd);
@@ -234,7 +234,7 @@ int Cryocooler::GetE(void){
 
 int Cryocooler::checkIfON(void){
 
-    std::string CC_String, CC_Firstline;
+    std::string CC_String, CCTC_Firstline;
     std::string CCCMd = "SET SSTOP\r";
 
     this->WriteString(CCCMd);
@@ -353,9 +353,9 @@ void Cryocooler::AdjustCryoPower(void){
 
 }
 
-void Cryocooler::SetCryoMode(void){
+int Cryocooler::SetCryoMode(void){
 
-    std::string CC_String, CC_Firstline;
+    std::string CC_String, CCTC_Firstline;
     std::string CCCMd = "SET PID=0\r";
 
     this->WriteString(CCCMd);

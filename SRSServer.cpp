@@ -28,7 +28,7 @@ int main()
     rpc::server srv(20555);
 
     /*Create the SRS Server Object and bind the member functions to the server*/
-    SRSPowerSupply SRS1("/dev/ttyUSB3");
+    SRSPowerSupply SRS1("/dev/SRSPowerSupply");
     
     /*This is for the 15 second updates and check-in MySQL*/
     std::function<void(void)> AutoSweepF = std::bind(&SRSPowerSupply::PerformSweep, &SRS1);

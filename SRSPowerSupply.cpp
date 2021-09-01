@@ -256,6 +256,11 @@ void SRSPowerSupply::PerformSweep(void){
         this->VoltageRamp(this->currentVoltage, 0.0, 5.0, true);
     }
 
+    /*Check if the PS state is not consistent, and if it is then turn it off*/
+    if (this->currentVoltage != 0 && this->SRSPowerState==0){
+        this->VoltageRamp(this->currentVoltage, 0.0, 5.0, true);
+    }
+
     advance_cursor();
 
 }
